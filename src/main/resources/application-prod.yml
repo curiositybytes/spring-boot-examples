@@ -16,3 +16,8 @@ spring:
 logging:
   level:
     root: INFO
+
+task:
+  limits:
+    maxTasksPerUser: 20
+    autoDeleteOverdue: true
