@@ -3,6 +3,7 @@ package com.interview.boot.service;
 import com.interview.boot.config.TaskProperties;
 import com.interview.boot.dto.TaskRequest;
 import com.interview.boot.entity.Task;
+import com.interview.boot.exception.ResourceNotFoundException;
 import com.interview.boot.repository.TaskRepository;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +29,8 @@ public class TaskService {
     public Task createTask(TaskRequest request) {
         Task task = new Task();
         task.setTitle(request.getTitle());
+        task.setUserId(request.getUserId());
+        task.setCompleted(request.isCompleted());
         return taskRepository.save(task);
     }
 
@@ -44,6 +47,26 @@ public class TaskService {
 
     public List<Task> getAll() {
         return taskRepository.findAll();
+    }
+
+    public Task getTask(Long id) {
+        return taskRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Task not found with id: " + id));
+    }
+
+    public Task updateTask(Long id, TaskRequest updateRequest) {
+        Task existing = getTask(id);
+
+        existing.setTitle(updateRequest.getTitle());
+        existing.setUserId(updateRequest.getUserId());
+        existing.setCompleted(updateRequest.isCompleted());
+
+        return taskRepository.save(existing);
+    }
+
+    public void deleteTask(Long id) {
+        Task existing = getTask(id);
+        taskRepository.delete(existing);
     }
 }
 
