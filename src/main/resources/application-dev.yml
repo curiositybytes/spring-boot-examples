@@ -16,3 +16,7 @@ logging:
   level:
     org.springframework: INFO
     com.interview.boot: DEBUG
+
+task:
+  limits:
+    maxTasksPerUser: 100

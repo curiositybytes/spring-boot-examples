@@ -11,3 +11,12 @@ app:
     default-page-size: 10
   features:
     enable-reminders: true
+
+task:
+  limits:
+    maxTasksPerUser: 50
+    autoDeleteOverdue: false
+  reminders:
+    enabled: true
+    email: support@taskmaster.com
+    intervalMinutes: 30
